@@ -1,0 +1,49 @@
+.item {
+  background: #fff;
+  margin: 5px auto;
+  padding: 5px 20px;
+  color: #063251;
+  border: 2px solid #111;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.itemOn {
+  border-left: 7px solid #063251;
+}
+
+.itemText {
+  display: flex !important;
+  flex-direction: column !important;
+  text-align: start !important;
+  justify-content: space-around;
+}
+.dialog-btns {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.dialog_btn {
+  background: #111;
+  color: #fff;
+  font-style: bold;
+  font-size: 15px;
+  font-family: inherit;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  margin: 5px 20px auto;
+}
+.dialog_btn:focus {
+  outline: none;
+}
+.dialog_btn:hover {
+  background: #063251;
+  color: #fff;
+}
+.dialog_btn:active {
+  transform: scale(0.98);
+}
