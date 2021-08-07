@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Button, Form, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useItem } from "../ItemsContext";
 
 function Update() {
@@ -10,6 +10,7 @@ function Update() {
   const [error, setError] = useState("");
   const pw = useRef();
   const pwConf = useRef()
+  const history = useHistory()
 
   const updateUser = async (event) => {
     setError("");
@@ -26,6 +27,10 @@ function Update() {
       setBtnDisable(true);
       await update(pw.current.value);
       setSuccess("Update successful");
+      setTimeout(() => {
+        history.push('/')
+      }, 1000);
+     
     } catch (error) {
       setError(error.message);
     }
@@ -52,7 +57,7 @@ function Update() {
           className="w-100 mt-4 btn-dark"
           type="submit"
         >
-          Create Account
+          Update Account
         </Button>
         <Link to='/' className="w-100 mt-2 btn btn-dark">Go Back</Link>
       </Form>

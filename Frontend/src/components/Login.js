@@ -14,6 +14,7 @@ function Login() {
   if (user) {
     return <Redirect to="/" />;
   }
+  
   const loginUser = async (event) => {
     setError("");
 
@@ -45,7 +46,7 @@ function Login() {
           <Form.Control type="password" ref={pw} required />
         </Form.Group>
         <Button disabled={btnDisable} className="w-100 mt-4 btn-dark" type="submit">
-          Create Account
+          Login
         </Button>
       </Form>
 

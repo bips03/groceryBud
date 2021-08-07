@@ -1,15 +1,18 @@
 import React, { useRef, useState } from "react";
 import { Button, Form, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useItem } from "../ItemsContext";
 
 function Reset() {
-  const { reset } = useItem();
+  const { user, reset } = useItem();
   const [btnDisable, setBtnDisable] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
-  const pw = useRef();
-  const pwConf = useRef()
+  const email = useRef();
+  
+  if(user){
+    return <Redirect to='/' />
+  }
 
   const updateUser = async (event) => {
     setError("");
@@ -17,14 +20,11 @@ function Reset() {
 
     event.preventDefault();
 
-    if(pw.current.value !== pwConf.current.value){
-        setError('Password do not match')
-        return;
-    }
+   
 
     try {
       setBtnDisable(true);
-      await reset(pw.current.value);
+      await reset(email.current.value);
       setSuccess("Check Email for further instructions");
     } catch (error) {
       setError(error.message);
@@ -39,22 +39,19 @@ function Reset() {
       {success && <Alert variant="success">{success}</Alert>}
       <h2 className="w-100 text-center"> Reset Password </h2>
       <Form onSubmit={updateUser}>
-        <Form.Group id="password" className="mt-2 text-start">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" ref={pw} required />
+        <Form.Group id="email" className="mt-2 text-start">
+          <Form.Label>Enter Email</Form.Label>
+          <Form.Control type="email" ref={email} required />
         </Form.Group>
-        <Form.Group id="confirmPw" className="mt-2 text-start">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control type="password" ref={pwConf} required />
-        </Form.Group>
+       
         <Button
           disabled={btnDisable}
           className="w-100 mt-4 btn-dark"
           type="submit"
         >
-          Create Account
+          Reset Password
         </Button>
-        <Link to='/' className="w-100 mt-2 btn btn-dark">Go Back</Link>
+        <Link to='/login' className="w-100 mt-2 btn btn-dark">Go Back</Link>
       </Form>
     </>
   );

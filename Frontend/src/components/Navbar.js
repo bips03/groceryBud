@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import "./Navbar.css";
 import { Add, Remove } from "@material-ui/icons";
 import { useItem } from "../ItemsContext";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function Navbar() {
   const { signout, show, showAdd } = useItem()
@@ -32,6 +32,9 @@ function Navbar() {
       <button disabled={disabled} className="btn btn-dark me-3 " onClick={signOut}>
         Sign out
       </button>
+      <Link to='/update' className="btn btn-dark me-3 ">
+        Update
+      </Link>
     </header>
   );
 }

@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { Button, Form, Alert } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { useItem } from "../ItemsContext";
 
 function Signup() {
-  const { signup } = useItem();
+  const { user, signup } = useItem();
   const [btnDisable, setBtnDisable] = useState(false);
   const [error, setError] = useState("");
 
@@ -12,6 +12,10 @@ function Signup() {
 
   const email = useRef();
   const pw = useRef();
+
+  if(user){
+    return <Redirect to='/' />
+  }
 
   const submitUser = async (event) => {
     setError("");

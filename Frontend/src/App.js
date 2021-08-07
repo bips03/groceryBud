@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Update from './components/Update';
+import Reset from './components/Reset'
 import { ItemsContextProvider } from "./ItemsContext";
 import { Card, Container } from "react-bootstrap";
 import PrivateRoute from "./PrivateRoute";
@@ -28,7 +29,7 @@ function App() {
               <PrivateRoute exact path="/" component={Items} />
               <PrivateRoute exact path="/" component={Footer} />
               <PrivateRoute path = '/update' component = {Update} />
-              <Route path='/reset' componenet = {Reset} /> 
+              <Route path='/reset' component = {Reset} /> 
             </Card.Body>
           </Card>
         </Container>

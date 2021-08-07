@@ -8,26 +8,29 @@ export const useItem = () => {
 export function ItemsContextProvider({ children }) {
   const [items, setItems] = useState([]);
   const [show, setShow] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    uid : 0
+  });
   const [loading, setLoading] = useState(true);
 
-  // when loads get data from file and store to items
   useEffect(() => {
-    const getData = async () => {
-      const data = await fetch("http://localhost:5000/items");
-      const stateData = await data.json();
-      setItems(stateData);
-    };
-
     // when the componenet mounts set the user if there already exists
     // a user
     const cleanup = auth.onAuthStateChanged((u) => {
       setUser(u);
       setLoading(false);
     });
+
+    const getData = async () => {
+      const data = await fetch(`http://localhost:5000/items/${user.uid}`);
+      const stateData = await data.json();
+      setItems(stateData);
+    };
+
     getData();
     return cleanup;
   }, []);
+
 
   const signup = (e, p) => {
     return auth.createUserWithEmailAndPassword(e, p);
@@ -44,10 +47,14 @@ export function ItemsContextProvider({ children }) {
   const update = (p) => {
     return auth.currentUser.updatePassword(p);
   };
+
+  const reset = (e) => {
+    return auth.sendPasswordResetEmail(e);
+  };
   // !!! CREATE !!!
   // add state
   const addState = async (item) => {
-    const res = await fetch("http://localhost:5000/items", {
+    const res = await fetch(`http://localhost:5000/items/${user.uid}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -66,7 +73,7 @@ export function ItemsContextProvider({ children }) {
   // fetch data of id
 
   const getItem = async (id) => {
-    const itemGot = await fetch(`http://localhost:5000/items/${id}`);
+    const itemGot = await fetch(`http://localhost:5000/items/${user.uid}/${id}`);
     const jdata = await itemGot.json();
     return jdata;
   };
@@ -74,7 +81,7 @@ export function ItemsContextProvider({ children }) {
   // DELETE
   // delete item
   const onDelete = async (id) => {
-    await fetch(`http://localhost:5000/items/${id}`, {
+    await fetch(`http://localhost:5000/items/${user.uid}/${id}`, {
       method: "DELETE",
     });
 
@@ -91,7 +98,7 @@ export function ItemsContextProvider({ children }) {
     const itemToChange = await getItem(id);
     const uData = { ...itemToChange, done: !itemToChange.done };
 
-    const res = await fetch(`http://localhost:5000/items/${id}`, {
+    const res = await fetch(`http://localhost:5000/items/${user.uid}/${id}`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
@@ -110,7 +117,7 @@ export function ItemsContextProvider({ children }) {
 
   // edit item name or quantity
   const editItem = async (id, editedItem) => {
-    const res = await fetch(`http://localhost:5000/items/${id}`, {
+    const res = await fetch(`http://localhost:5000/items/${user.uid}/${id}`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
@@ -146,6 +153,7 @@ export function ItemsContextProvider({ children }) {
     login,
     signout,
     update,
+    reset,
   };
   return (
     !loading && (
