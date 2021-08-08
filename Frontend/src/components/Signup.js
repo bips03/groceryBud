@@ -12,15 +12,21 @@ function Signup() {
 
   const email = useRef();
   const pw = useRef();
+  const pwConf = useRef();
 
-  if(user){
-    return <Redirect to='/' />
+  if (user) {
+    return <Redirect to="/" />;
   }
 
   const submitUser = async (event) => {
     setError("");
 
     event.preventDefault();
+
+    if (pw.current.value !== pwConf.current.value) {
+      setError("Password do not match");
+      return;
+    }
 
     try {
       setBtnDisable(true);
@@ -46,7 +52,15 @@ function Signup() {
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" ref={pw} required />
         </Form.Group>
-        <Button disabled={btnDisable} className="w-100 mt-4 btn-dark" type="submit">
+        <Form.Group id="confirmPw" className="mt-2 text-start">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control type="password" ref={pwConf} required />
+        </Form.Group>
+        <Button
+          disabled={btnDisable}
+          className="w-100 mt-4 btn-dark"
+          type="submit"
+        >
           Create Account
         </Button>
       </Form>

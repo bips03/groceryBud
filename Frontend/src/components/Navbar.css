@@ -14,3 +14,14 @@ h2{
    
 }
 
+.menu-toggle{
+    color : #fff !important;
+    background-color: #111 !important;
+    border-color: #111 !important;
+}
+
+.menu-item:focus{
+    color : #111 !important;
+    background-color: transparent !important;
+}
+

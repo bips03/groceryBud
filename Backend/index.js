@@ -12,7 +12,7 @@ app.use( cors() )
 app.use(express.json())
 app.use( urlencoded( {extended : true}));
 
-app.use('/items', require('./routes/items'))
+
 
 mongoose.connect(
     process.env.DB_CONNECT,

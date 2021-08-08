@@ -4,8 +4,7 @@ import Item from './Item'
 import './Items.css'
 function Items() {
 
-    const { user, items} = useItem()
-
+    const { items } = useItem()
     const noItemStyle = {
       height: "calc(100vh - 250px)",
       textAlign: "center",
@@ -20,12 +19,7 @@ function Items() {
             item={item} 
             />
             )
-    })
-
-    console.log(user.uid)
-    
-    
-    
+    })   
     return items.length > 0? (
         <div className='items'>
             {itemList}

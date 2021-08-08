@@ -8,9 +8,7 @@ export const useItem = () => {
 export function ItemsContextProvider({ children }) {
   const [items, setItems] = useState([]);
   const [show, setShow] = useState(false);
-  const [user, setUser] = useState({
-    uid : 0
-  });
+  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,10 +25,9 @@ export function ItemsContextProvider({ children }) {
       setItems(stateData);
     };
 
-    getData();
+    user && user.uid && getData();
     return cleanup;
-  }, []);
-
+  }, [user]);
 
   const signup = (e, p) => {
     return auth.createUserWithEmailAndPassword(e, p);
@@ -44,9 +41,15 @@ export function ItemsContextProvider({ children }) {
     return auth.signOut();
   };
 
-  const update = (p) => {
+  const updatePassword = (p) => {
     return auth.currentUser.updatePassword(p);
   };
+
+  const updateProfile = (name) => {
+    return auth.currentUser.updateProfile({
+      displayName : name
+    })
+  }
 
   const reset = (e) => {
     return auth.sendPasswordResetEmail(e);
@@ -81,10 +84,10 @@ export function ItemsContextProvider({ children }) {
   // DELETE
   // delete item
   const onDelete = async (id) => {
+
     await fetch(`http://localhost:5000/items/${user.uid}/${id}`, {
       method: "DELETE",
     });
-
     setItems(
       items.filter((item) => {
         return item._id !== id;
@@ -96,6 +99,7 @@ export function ItemsContextProvider({ children }) {
   // change the status of done on double click
   const changeDone = async (id) => {
     const itemToChange = await getItem(id);
+
     const uData = { ...itemToChange, done: !itemToChange.done };
 
     const res = await fetch(`http://localhost:5000/items/${user.uid}/${id}`, {
@@ -152,8 +156,9 @@ export function ItemsContextProvider({ children }) {
     signup,
     login,
     signout,
-    update,
-    reset,
+    updatePassword,
+    updateProfile,
+    reset
   };
   return (
     !loading && (

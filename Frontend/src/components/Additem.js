@@ -9,8 +9,7 @@ function Additem() {
   const { show, setShow, addState } = useItem();
   const [item, setItem] = useState({
     name: "",
-    qty: "",
-    done: false,
+    qty: ""
   });
 
   const changeItem = (e) => {
@@ -31,7 +30,7 @@ function Additem() {
 
     addState(item);
 
-    setItem({ name: "", qty: "", done: false });
+    setItem({ name: "", qty: "" });
     setShow(false)
   };
 

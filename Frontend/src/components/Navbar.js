@@ -1,25 +1,26 @@
-import React, {useState} from "react";
+import React from "react";
 import "./Navbar.css";
 import { Add, Remove } from "@material-ui/icons";
 import { useItem } from "../ItemsContext";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
+import "./Navbar.css";
 
 function Navbar() {
-  const { signout, show, showAdd } = useItem()
-  const [disabled, setDisabled] = useState(false)
-  const history = useHistory()
+  const { user, signout, show, showAdd } = useItem();
+  const history = useHistory();
+ 
 
   const signOut = async () => {
-    setDisabled(true)
     try {
-      await signout()
-      history.push('/login')
+      await signout();
+      history.push("/login");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    setDisabled(false)
-  }
- 
+  };
+
+
   return (
     <header className="header">
       <h2 className="text animate__animated animate__fadeInLeft">
@@ -29,12 +30,25 @@ function Navbar() {
       <button className="btn btn-dark  my-auto me-3 " onClick={showAdd}>
         {show ? <Remove /> : <Add />}
       </button>
-      <button disabled={disabled} className="btn btn-dark me-3 " onClick={signOut}>
-        Sign out
-      </button>
-      <Link to='/update' className="btn btn-dark me-3 ">
-        Update
-      </Link>
+
+      <Dropdown className="my-auto me-3 ">
+        <Dropdown.Toggle className="menu-toggle shadow-none">
+          {user.displayName && user.displayName}
+          {!user.displayName && "Profile"}
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item className="text-center menu-item" onClick={signOut}>
+            Sign Out
+          </Dropdown.Item>
+
+          <Dropdown.Item href="/update" className="text-center menu-item">
+            Update
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      
+      
     </header>
   );
 }
