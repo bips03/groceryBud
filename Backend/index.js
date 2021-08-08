@@ -2,7 +2,8 @@ const { urlencoded } = require('express')
 const express = require('express');
 const mongoose = require('mongoose');
 require("dotenv/config");
-const cors = require('cors')
+const cors = require('cors');
+const path = require('path')
 
 const PORT = process.env.PORT || 5000;
 
@@ -21,6 +22,11 @@ mongoose.connect(
       console.log('Db connected!')
     }
   );
+
+
+  if(process.env.NODE_ENV==='production'){
+    app.use(express.static(path.join(__dirname,'../Frontend/build')))
+  }
 
 app.listen(PORT, () => {
     console.log('Server started! ')
