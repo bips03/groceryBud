@@ -20,7 +20,7 @@ export function ItemsContextProvider({ children }) {
     });
 
     const getData = async () => {
-      const data = await fetch(`http://localhost:5000/items/${user.uid}`);
+      const data = await fetch(`https://grocerybud.herokuapp.com/items/${user.uid}`);
       const stateData = await data.json();
       setItems(stateData);
     };
@@ -57,7 +57,7 @@ export function ItemsContextProvider({ children }) {
   // !!! CREATE !!!
   // add state
   const addState = async (item) => {
-    const res = await fetch(`http://localhost:5000/items/${user.uid}`, {
+    const res = await fetch(`https://grocerybud.herokuapp.com/items/${user.uid}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -76,7 +76,7 @@ export function ItemsContextProvider({ children }) {
   // fetch data of id
 
   const getItem = async (id) => {
-    const itemGot = await fetch(`http://localhost:5000/items/${user.uid}/${id}`);
+    const itemGot = await fetch(`https://grocerybud.herokuapp.com/items/${user.uid}/${id}`);
     const jdata = await itemGot.json();
     return jdata;
   };
@@ -85,7 +85,7 @@ export function ItemsContextProvider({ children }) {
   // delete item
   const onDelete = async (id) => {
 
-    await fetch(`http://localhost:5000/items/${user.uid}/${id}`, {
+    await fetch(`https://grocerybud.herokuapp.com/items/${user.uid}/${id}`, {
       method: "DELETE",
     });
     setItems(
@@ -102,7 +102,7 @@ export function ItemsContextProvider({ children }) {
 
     const uData = { ...itemToChange, done: !itemToChange.done };
 
-    const res = await fetch(`http://localhost:5000/items/${user.uid}/${id}`, {
+    const res = await fetch(`https://grocerybud.herokuapp.com/items/${user.uid}/${id}`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
@@ -121,7 +121,7 @@ export function ItemsContextProvider({ children }) {
 
   // edit item name or quantity
   const editItem = async (id, editedItem) => {
-    const res = await fetch(`http://localhost:5000/items/${user.uid}/${id}`, {
+    const res = await fetch(`https://grocerybud.herokuapp.com/items/${user.uid}/${id}`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
