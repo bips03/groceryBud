@@ -20,6 +20,10 @@ function Navbar() {
     }
   };
 
+  const style = {
+     'font-family' : "Poppins, sans-serif"
+  }
+
 
   return (
     <header className="header">
@@ -39,11 +43,11 @@ function Navbar() {
 
         <Dropdown.Menu>
           <Dropdown.Item className="text-center menu-item" onClick={signOut}>
-            Sign Out
+            <b style={style}>Sign Out</b>
           </Dropdown.Item>
 
           <Dropdown.Item href="/update" className="text-center menu-item">
-            Update
+            <b style={style}>Update</b>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
